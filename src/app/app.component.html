@@ -3,12 +3,13 @@
 <!-- create a list to display orders -->
 
 <!-- create a div that lets user make new order -->
-<header>This is Test for James Marshall !!!</header>
-
+<header>
+  <h1  class="Banner"> Astea</h1>
+</header>
 <mat-accordion>
-  <mat-expansion-panel *ngFor="let Ord of orders[0]">
+  <mat-expansion-panel *ngFor="let Ord of orders">
     <mat-expansion-panel-header>
-      Company Name {{Ord.customerInformation}},  Creation Date: {{Ord.creationDate}}, Due Date: {{Ord.dueDate}}
+      Company Name {{Ord.customerInformation}},  Creation Date: {{Ord.creationDate | date}}, Due Date: {{Ord.dueDate}}
     </mat-expansion-panel-header>
       <ul> List of products ordered
         <li *ngFor="let Prod of Ord.listOfOrderedProd">Product name: {{Prod.product}}, Number of items: {{Prod.number}}</li>
@@ -16,22 +17,40 @@
   </mat-expansion-panel>
 </mat-accordion>
 
-<button (click)="createNewOrder()">add order</button>
+<button (click)="startOrder()">Start New Order</button>
 
-<Form>
-  <label>Customer Information</label>
-  <input required id="csInformation" type='text' class="form-control">
-  <label>Due Date</label>
-  <input required id="dueDate" type='text' class="form-control">
-  <div *ngFor="let a of numberOfItemsInOrder">
-    <label>Item Name</label>
-    <input required id="itemName" type='text' class="form-control">
-    <label>Number of Items</label>
-    <input required id="numberOfItems" type='number' class="form-control">
-  </div>
-  <button (click)="buttonClicked($event)" type="submit" class="btn btn-success">Submit</button>
-</Form>
-<button (click)="addItemToOrder()">add another item to list</button>
+<div *ngIf="newOrder.customerInformation">
+  <h2>Your current order</h2>
+  <p>Customer Information {{newOrder.customerInformation}}</p>
+  <p>Creation Date {{newOrder.creationDate | date}}</p>
+  <p>Due Date of Order {{newOrder.dueDate}}</p>
+</div>
+
+<div *ngIf="itemSubmitted">
+  <ul>
+    <li *ngFor="let i of newListOfItems">Product name {{i.product}}, number of product {{i.number}}</li>
+  </ul>
+</div>
+
+<div *ngIf="isOrderActive1">
+    <form #order="ngForm" (ngSubmit)="onSubmit(order)" novalidate>
+        <label>Customer Information</label>
+        <input name="csInformation" ngModel id="csInformation" type='text' class="form-control">
+        <label>Due Date</label>
+        <input name="dueDate" ngModel id="dueDate" type='text' class="form-control">
+          <button>Submit</button>
+        </form>
+</div>
+<div *ngIf="isOrderActive2">
+    <form #order="ngForm" (ngSubmit)="onSubmitItem(order)" novalidate>
+            <label>Item Name</label>
+            <input name="item" ngModel id="itemName" type='text' class="form-control">
+            <label>Number of Items</label>
+            <input name="numOfItems" ngModel id="numberOfItems" type='number' class="form-control">
+          <button>Add Item</button>
+        </form>
+        <button (click)="submitOrder()">Submit Order</button>
+</div>
 
 
 

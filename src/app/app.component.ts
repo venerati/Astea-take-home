@@ -6,12 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 
 })
+
 export class AppComponent {
 
   testDataLocation:'assets/data.json';
-  orders = [];
-  originalOrder = [
-    {
+  orders = []; //holds existing orders
+  originalOrder = [{
       "customerInformation": "NBME",
       "creationDate": "10-1-19",
       "dueDate": "10-20-19",
@@ -20,10 +20,20 @@ export class AppComponent {
           "product": "wands",
           "number": 4
           }]
-    }
-  ];
-  numberOfItemsInOrder = [1];
-  
+    }];
+
+  isOrderActive1: boolean = false;
+  isOrderActive2: boolean = false;
+  itemSubmitted: boolean = false;
+  newOrder = {
+      "customerInformation": "",
+      "creationDate": 1,
+      "dueDate": "",
+      "listOfOrderedProd": [],
+  }
+  newListOfItems = []; 
+  numberOfItems
+  today: number = Date.now()
   constructor() {};
 
   ngOnInit(){
@@ -32,48 +42,71 @@ export class AppComponent {
     this.displayExistingOrders();
   };
 
+  //sets a bool to display the ui to the user so they can star the order.
+  startOrder(){
+    this.isOrderActive1 = true;
+  }
+
+  //sets the current orders list to show what was in storage for the user to see
   displayExistingOrders(){
     console.log('display orders fired')
-    this.orders.push(JSON.parse(localStorage.getItem("orders")));
-    console.log(this.orders)
+    this.orders = (JSON.parse(localStorage.getItem("orders")));
+    console.log("this is the current set of orders" + JSON.stringify(this.orders))
   }
 
-  addItemToOrder(){
-    this.numberOfItemsInOrder.push(1);
-  }
-
-  buttonClicked(event) {
+  //this handles the main addition of the order, starts the ux flow
+  onSubmit(e){
     event.preventDefault();
-    console.log(event);
+    console.log("form was submitted");
+    console.log(e.value); 
+    this.newOrder.customerInformation = e.value.csInformation;
+    this.newOrder.dueDate = e.value.dueDate;
+    this.newOrder.creationDate = this.today;
+    this.isOrderActive1 = false;
+    this.isOrderActive2 = true;
+  }
+
+  //this handles the additions of the items list to the main order
+  onSubmitItem(e) {
+    event.preventDefault();
+    console.log("list submit was fired");
+    console.log(e.value);
+    this.newListOfItems.push({"product": e.value.item, "number": e.value.numOfItems})
+    this.itemSubmitted = true;
   }
   
+  //this take the new order, places it in to the orders var and submits the new combined order list
+  submitOrder(){
+    console.log("order has been submitted");
+    this.newOrder.listOfOrderedProd = this.newListOfItems;
+    this.orders.push(this.newOrder);
+    console.log("this is orders before I push" + JSON.stringify(this.orders))
+    localStorage.setItem("orders",JSON.stringify(this.orders));
+    this.isOrderActive1 = false
+    this.isOrderActive2 = false;
+    this.itemSubmitted = false;
+    this.clearNewOrder();
+    console.log(this.orders);
+    console.log("these are the orders from storage" + localStorage.getItem("orders"));
+  }
 
-  //make a create new order
-  createNewOrder(){
-    let anotherOrder = {
-      "customerInformation": "NBME",
-      "creationDate": "10-1-19",
-      "dueDate": "10-20-19",
-      "listOfOrderedProd": 
-          [{
-          "product": "wands",
-          "number": 4
-          }]
+  //sets the var newOrder back after saving order.
+  clearNewOrder(){
+    this.newOrder = {
+      "customerInformation": "",
+      "creationDate": 1,
+      "dueDate": "",
+      "listOfOrderedProd": []
     }
-    this.orders[0].push(anotherOrder);
-    console.log(this.orders)
   }
 
-
+  //this checks to see if there are any values in local storage. This is really only ment to populate a starting value.
   setLocalStorage(){
-    localStorage.setItem("orders",JSON.stringify(this.originalOrder))
-
-  }
-
-  pullOrdersFromStorage(){
-    console.log(localStorage.length);
-    console.log(localStorage.getItem("orders"))
-    localStorage.setItem("orders",JSON.stringify(this.orders))
+    let testStorage = localStorage.getItem("orders")
+    console.log("set location fired " + testStorage)
+    if(testStorage == null) {
+      localStorage.setItem("orders",JSON.stringify(this.originalOrder))
+    }
   }
   
 
