@@ -1,4 +1,95 @@
 .Banner {
-    width: 100%;
-    background: blue;
+    background: #007bff;
+    height: 5rem;
+    text-align: center;
+    padding-top: 1rem;
 }
+
+.mainCard {
+    background: #f8f9fa;
+    padding: 0px;
+    margin-top: 2rem;
+    border: 2px solid #000000;
+}
+
+.mainCardHeader {
+    background: #e0e0e0;
+    text-align: center;
+    height: 3.5rem;
+    margin-bottom: 1rem;
+    padding-top: .5rem;
+}
+.mainCardTitleText{
+    text-align: center;
+}
+
+.activeOrderHeader{
+    background: #c3c3c3;
+    margin: 5px;
+    font-weight: 600;
+}
+
+.orderDetails {
+    margin-top:10px;
+    background: white;
+    border-radius: 9px 9px 9px 9px;
+    -moz-border-radius: 9px 9px 9px 9px;
+    -webkit-border-radius: 9px 9px 9px 9px;
+    border: 2px solid #000000;
+}
+
+.startNewButton{
+    margin: 5px;
+}
+
+.form-contol {
+    color: #000000;
+}
+
+.newOrderCard {
+    background: #bcddff;
+    padding: 0px;
+    margin-top: 2rem;
+    padding: 0px;
+    border: 2px solid #000000;
+}
+
+.csInfoButton {
+    margin-top: 9px;
+}
+
+.addItemButton {
+    margin-top: 9px;
+}
+
+.submitNewOrderButton {
+    margin-top: 9px;
+}
+
+.currentOrderBox {
+    background: #f8f9fa;
+    padding: 4%;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.newCardTitleText {
+    background: #007bff;
+    text-align: center;
+    height: 3.5rem;
+    margin-bottom: 1rem;
+    padding-top: .5rem;
+}
+
+.paddingDiv {
+    padding: 20px;
+}
+
+.innerNewOrderHeader {
+    margin-bottom: 30px;
+}
+
+.innerItemHeader {
+    margin-bottom: 10px;
+}
+

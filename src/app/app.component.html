@@ -1,56 +1,79 @@
-<!-- create a banner -->
-
-<!-- create a list to display orders -->
-
-<!-- create a div that lets user make new order -->
-<header>
-  <h1  class="Banner"> Astea</h1>
-</header>
-<mat-accordion>
-  <mat-expansion-panel *ngFor="let Ord of orders">
-    <mat-expansion-panel-header>
-      Company Name {{Ord.customerInformation}},  Creation Date: {{Ord.creationDate | date}}, Due Date: {{Ord.dueDate}}
-    </mat-expansion-panel-header>
-      <ul> List of products ordered
-        <li *ngFor="let Prod of Ord.listOfOrderedProd">Product name: {{Prod.product}}, Number of items: {{Prod.number}}</li>
-      </ul>
-  </mat-expansion-panel>
-</mat-accordion>
-
-<button (click)="startOrder()">Start New Order</button>
-
-<div *ngIf="newOrder.customerInformation">
-  <h2>Your current order</h2>
-  <p>Customer Information {{newOrder.customerInformation}}</p>
-  <p>Creation Date {{newOrder.creationDate | date}}</p>
-  <p>Due Date of Order {{newOrder.dueDate}}</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1  class="Banner">My Order System</h1>
+        </div>
+        <div class="col-md-8 offset-md-2">
+            <mat-card class="mainCard">
+                <div class="mainCardHeader">
+                    <h3 class="mainCardTitleText">Current Orders</h3>
+                </div>
+              <mat-accordion>
+                <mat-expansion-panel *ngFor="let Ord of orders">
+                  <mat-expansion-panel-header class="activeOrderHeader">
+                    Company Name {{Ord.customerInformation}} 
+                  </mat-expansion-panel-header>
+                    <ul class="orderDetails"> List of products ordered
+                      <li>Creation Date: {{Ord.creationDate | date}} </li>
+                      <li>Due Date: {{Ord.dueDate}}</li>
+                      <li *ngFor="let Prod of Ord.listOfOrderedProd" >Product name: {{Prod.product}}, Number of items: {{Prod.number}}</li>
+                    </ul>
+                </mat-expansion-panel>
+              </mat-accordion>
+                <div>
+                  <button class="startNewButton btn-secondary" (click)="startOrder()">Start New Order</button>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-md-8 offset-md-2">
+            <mat-card class="newOrderCard" *ngIf="newOrderStarted">
+                <div class="newCardTitleText">
+                    <h3 class="CardTitleText">New Order</h3>
+                </div>
+                <div class="paddingDiv">
+                    <div class="currentOrderBox" *ngIf="newOrder.customerInformation">
+                        <h4 class="innerNewOrderHeader">Your current order</h4>
+                        <p>Customer Information: {{newOrder.customerInformation}}</p>
+                        <p>Creation Date: {{newOrder.creationDate | date}}</p>
+                        <p>Due Date of Order: {{newOrder.dueDate}}</p>
+                    </div>
+                    <div class="currentOrderBox" *ngIf="itemSubmitted">
+                        <h4  class="innerItemHeader">Item List</h4>
+                            <ul> 
+                              <li *ngFor="let i of newListOfItems">Product name {{i.product}}, number of product {{i.number}}</li>
+                            </ul>
+                    </div>
+                      
+                      <div *ngIf="isOrderActive1">
+                        <form #order="ngForm" (ngSubmit)="onSubmit(order)" novalidate>
+                          <label>Customer Information</label>
+                          <input name="csInformation" placeholder="Walmart" ngModel id="csInformation" type='text' class="form-control">
+                          <label>Due Date</label>
+                          <input name="dueDate" placeholder="10-4-2019" ngModel id="dueDate" type='date' class="form-control">
+                          <button class="csInfoButton btn-primary">Submit</button>
+                        </form>
+                      </div>
+                      <div *ngIf="isOrderActive2">
+                          <form class="itemForm" #order="ngForm" (ngSubmit)="onSubmitItem(order)" novalidate>
+                            <label>Item Name</label>
+                            <input name="item" placeholder="Broom" ngModel id="itemName" type='text' class="form-control">
+                            <label>Number of Items</label>
+                            <input name="numOfItems" placeholder="1" ngModel id="numberOfItems" type='number' class="form-control">
+                            <button class="addItemButton btn-primary">Add Item</button>
+                          </form>
+                      </div>
+                      <div>
+                        <button class="submitNewOrderButton btn-success" *ngIf="itemSubmitted" (click)="submitOrder()">Submit Order</button>
+                      </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
 </div>
 
-<div *ngIf="itemSubmitted">
-  <ul>
-    <li *ngFor="let i of newListOfItems">Product name {{i.product}}, number of product {{i.number}}</li>
-  </ul>
-</div>
 
-<div *ngIf="isOrderActive1">
-    <form #order="ngForm" (ngSubmit)="onSubmit(order)" novalidate>
-        <label>Customer Information</label>
-        <input name="csInformation" ngModel id="csInformation" type='text' class="form-control">
-        <label>Due Date</label>
-        <input name="dueDate" ngModel id="dueDate" type='text' class="form-control">
-          <button>Submit</button>
-        </form>
-</div>
-<div *ngIf="isOrderActive2">
-    <form #order="ngForm" (ngSubmit)="onSubmitItem(order)" novalidate>
-            <label>Item Name</label>
-            <input name="item" ngModel id="itemName" type='text' class="form-control">
-            <label>Number of Items</label>
-            <input name="numOfItems" ngModel id="numberOfItems" type='number' class="form-control">
-          <button>Add Item</button>
-        </form>
-        <button (click)="submitOrder()">Submit Order</button>
-</div>
+
+
 
 
 

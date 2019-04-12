@@ -21,7 +21,7 @@ export class AppComponent {
           "number": 4
           }]
     }];
-
+  newOrderStarted: boolean = false;
   isOrderActive1: boolean = false;
   isOrderActive2: boolean = false;
   itemSubmitted: boolean = false;
@@ -32,7 +32,6 @@ export class AppComponent {
       "listOfOrderedProd": [],
   }
   newListOfItems = []; 
-  numberOfItems
   today: number = Date.now()
   constructor() {};
 
@@ -44,6 +43,7 @@ export class AppComponent {
 
   //sets a bool to display the ui to the user so they can star the order.
   startOrder(){
+    this.newOrderStarted = true;
     this.isOrderActive1 = true;
   }
 
@@ -73,6 +73,8 @@ export class AppComponent {
     console.log(e.value);
     this.newListOfItems.push({"product": e.value.item, "number": e.value.numOfItems})
     this.itemSubmitted = true;
+    document.getElementById("itemName").value = '';
+    document.getElementById("numberOfItems").value = '';
   }
   
   //this take the new order, places it in to the orders var and submits the new combined order list
@@ -85,6 +87,7 @@ export class AppComponent {
     this.isOrderActive1 = false
     this.isOrderActive2 = false;
     this.itemSubmitted = false;
+    this.newOrderStarted = false;
     this.clearNewOrder();
     console.log(this.orders);
     console.log("these are the orders from storage" + localStorage.getItem("orders"));

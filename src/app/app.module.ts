@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MatExpansionModule } from '@angular/material';
+import { MatExpansionModule, MatCardModule } from '@angular/material';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,9 @@ import { MatExpansionModule } from '@angular/material';
     HttpClientModule,
     BrowserAnimationsModule,
     MatExpansionModule,
-    FormsModule
+    FormsModule,
+    NgbModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

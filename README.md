@@ -1,3 +1,5 @@
+This project is just a quick demo of Angular 7 and what it can do.
+
 # Astea
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
