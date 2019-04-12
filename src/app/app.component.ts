@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppData } from './appData'
 
 @Component({
   selector: 'app-root',
@@ -33,6 +34,8 @@ export class AppComponent {
   }
   newListOfItems = []; 
   today: number = Date.now()
+  formData = new AppData('', '','', '');
+  
   constructor() {};
 
   ngOnInit(){
@@ -54,27 +57,35 @@ export class AppComponent {
     console.log("this is the current set of orders" + JSON.stringify(this.orders))
   }
 
-  //this handles the main addition of the order, starts the ux flow
+  //this handles the main addition of the order, starts the ux flow, This also handles the form requirement validation.
   onSubmit(e){
-    event.preventDefault();
-    console.log("form was submitted");
-    console.log(e.value); 
-    this.newOrder.customerInformation = e.value.csInformation;
-    this.newOrder.dueDate = e.value.dueDate;
-    this.newOrder.creationDate = this.today;
-    this.isOrderActive1 = false;
-    this.isOrderActive2 = true;
+    if( this.formData.csName == '' && this.formData.dueDate == '' ){
+      alert('All fields are required to continue.')
+    } else {
+      event.preventDefault();
+      console.log("form was submitted");
+      console.log(e.value); 
+      this.newOrder.customerInformation = e.value.csInformation;
+      this.newOrder.dueDate = e.value.dueDate;
+      this.newOrder.creationDate = this.today;
+      this.isOrderActive1 = false;
+      this.isOrderActive2 = true;
+    }
   }
 
-  //this handles the additions of the items list to the main order
+  //this handles the additions of the items list to the main order. This also handles the form requirement validation.
   onSubmitItem(e) {
-    event.preventDefault();
-    console.log("list submit was fired");
-    console.log(e.value);
-    this.newListOfItems.push({"product": e.value.item, "number": e.value.numOfItems})
-    this.itemSubmitted = true;
-    document.getElementById("itemName").value = '';
-    document.getElementById("numberOfItems").value = '';
+    if( this.formData.itemName == '' && this.formData.itemNumber == ''){
+      alert('All fields are required to continue.')
+    } else {
+      event.preventDefault();
+      console.log("list submit was fired");
+      console.log(e.value);
+      this.newListOfItems.push({"product": e.value.item, "number": e.value.numOfItems})
+      this.itemSubmitted = true;
+      this.formData.itemName = '';
+      this.formData.itemNumber = '';
+    }
   }
   
   //this take the new order, places it in to the orders var and submits the new combined order list
