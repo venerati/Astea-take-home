@@ -49,7 +49,7 @@
                           <label>Customer Information</label>
                           <input required [(ngModel)]="formData.csName" name="csInformation" placeholder="Walmart" ngModel id="csInformation" type='text' class="form-control">
                           <label>Due Date</label>
-                          <input required name="dueDate" placeholder="10-4-2019" ngModel id="dueDate" type='date' class="form-control">
+                          <input required [(ngModel)]="formData.dueDate" name="dueDate" placeholder="10-4-2019" ngModel id="dueDate" type='date' class="form-control">
                           <button class="csInfoButton btn-primary">Submit</button>
                         </form>
                       </div>

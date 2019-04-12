@@ -59,7 +59,7 @@ export class AppComponent {
 
   //this handles the main addition of the order, starts the ux flow, This also handles the form requirement validation.
   onSubmit(e){
-    if( this.formData.csName == '' && this.formData.dueDate == '' ){
+    if( this.formData.csName == '' || this.formData.dueDate == '' ){
       alert('All fields are required to continue.')
     } else {
       event.preventDefault();
@@ -70,12 +70,14 @@ export class AppComponent {
       this.newOrder.creationDate = this.today;
       this.isOrderActive1 = false;
       this.isOrderActive2 = true;
+      this.formData.csName = ''; 
+      this.formData.dueDate = '';
     }
   }
 
   //this handles the additions of the items list to the main order. This also handles the form requirement validation.
   onSubmitItem(e) {
-    if( this.formData.itemName == '' && this.formData.itemNumber == ''){
+    if( this.formData.itemName == '' || this.formData.itemNumber == ''){
       alert('All fields are required to continue.')
     } else {
       event.preventDefault();
